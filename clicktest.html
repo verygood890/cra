@@ -5,36 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반응속도</title>
     <style>
+    
+        @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
         #screen {
-            width: 300px;
-            height: 200px;
-            text-align: center;
-            user-select: none;
+            border: 7px solid #4b4b4b; 
+            margin: 10px; 
+            border-radius: 10px; 
+            width: 700px;
+            height: 500px; 
+            text-align: center; 
+            font-family: "Jua", sans-serif; 
+            margin-top: 50px;
+            font-size: 50px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
         }
+      
         #screen.waiting {
-            background-color: rgb(10, 116, 255);
+            background-color: rgb(10, 116, 255); 
+            color: rgb(220, 220, 220); 
         }
+ 
         #screen.ready {
             background-color: red;
-            color: white;
+            color: white; // 글자색 설정
         }
-        #screen.clicknow{
-            background-color: greenyellow;
+       
+        #screen.clicknow {
+            background-color: greenyellow; 
+        }
+  
+        #result {
+            font-family: "Jua", sans-serif; 
+            font-size: 24px; 
+            margin-top: 20px; /*상단 외부 여백 설정*/
+            text-align: center; /* 텍스트 가운데 정렬*/
         }
     </style>
 </head>
 <body>
-    <div id = "screen" class="waiting">클릭해서 시작하기</div>
-    <div id = "result"></div>
+    <div id="screen" class="waiting">클릭해서 시작하기</div> 
+    <div id="result"></div> 
 </body>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const screen = document.querySelector("#screen");
   const result = document.querySelector("#result");
 
-  let startTime; // 시작시간
-  let endTime; // 측정 시간
-  let responseTime; //  걸린 시간
+  let startTime; // 시작 시간
+  let endTime; // 종료 시간
+  let responseTime; // 반응 시간
 
   screen.addEventListener("click", () => {
     if (screen.classList.contains("waiting")) {
@@ -42,18 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
       screen.textContent = "초록색이 되면 클릭";
 
       setTimeout(() => {
-        startTime = new Date();
+        startTime = new Date(); // 시작 시간 기록
         screen.classList.replace("ready", "clicknow");
         screen.textContent = "클릭 하세요!";
-      }, Math.floor(Math.random() * 1000) + 2000);
-    }else if (screen.classList.contains("ready")) {
+      }, Math.floor(Math.random() * 1000) + 2000); // 2초에서 3초 사이의 랜덤 시간 후 상태 변경
+    } else if (screen.classList.contains("ready")) {
       screen.textContent = '너무 성급합니다!';
       screen.classList.replace('ready', 'waiting');
-    } else if (screen.classList.contains("ready")) {
     } else if (screen.classList.contains("clicknow")) {
-      endTime = new Date();
-      responseTime = endTime - startTime; // 걸린 시간
-      result.textContent = responseTime + "ms";
+      endTime = new Date(); // 종료 시간 기록
+      responseTime = endTime - startTime; // 반응 시간 계산
+      result.textContent = "반응속도: "+responseTime + "ms"; // 결과 표시
       screen.classList.replace("clicknow", "waiting");
       screen.textContent = "클릭해서 시작하기";
     }
